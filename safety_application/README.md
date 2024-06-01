@@ -1,4 +1,6 @@
 # Safety_Application
 
-Ensuring Users are Safe all the Times by sharing Real Time Locations 
- 
+
+## Main Objective:
+
+To develop a comprehensive safety and mental health application that enables users to enhance their personal safety, access mental health resources, and communicate with therapists.
