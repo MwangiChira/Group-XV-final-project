@@ -15,7 +15,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Community Support'),
+        title: const Text('Community Support'),
       ),
       body: Column(
         children: [
@@ -27,7 +27,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
                 final messages = snapshot.data!.docs;
                 return ListView.builder(
@@ -45,7 +45,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
               },
             ),
           ),
-          Divider(),
+          const Divider(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -53,17 +53,17 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 Expanded(
                   child: TextField(
                     controller: _messageController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter your message',
                     ),
                   ),
                 ),
-                SizedBox(width: 8.0),
+                const SizedBox(width: 8.0),
                 ElevatedButton(
                   onPressed: () {
                     _sendMessage();
                   },
-                  child: Text('Send'),
+                  child: const Text('Send'),
                 ),
               ],
             ),
@@ -85,3 +85,5 @@ class _CommunityScreenState extends State<CommunityScreen> {
     }
   }
 }
+
+class QuerySnapshot {}
