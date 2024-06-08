@@ -19,7 +19,9 @@ class _PanicButtonState extends State<PanicButton> {
     });
 
     // Request location permission
+    var Permission;
     PermissionStatus permission = await Permission.location.request();
+    var granted;
     if (permission != PermissionStatus.granted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Location permission denied')),
@@ -58,7 +60,7 @@ class _PanicButtonState extends State<PanicButton> {
   }
 
   Future<void> _findNearbyHelplines(Position position) async {
-    final String apiKey = 'YOUR_GOOGLE_API_KEY';
+    final String apiKey = 'YOUR_GOOGLE_API_KEY'; //will share the keys privately or everyone can generate their own keys and insert them for the app to run efficiently
     final String url =
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${position.latitude},${position.longitude}&radius=5000&type=police|hospital&key=$apiKey';
 
@@ -80,8 +82,8 @@ class _PanicButtonState extends State<PanicButton> {
       onPressed: _isLoading ? null : _sendPanicAlert,
       child: _isLoading ? CircularProgressIndicator() : Text('Panic Button'),
       style: ElevatedButton.styleFrom(
-        primary: Colors.red,
-        onPrimary: Colors.white,
+        // primary: Colors.red,
+        // onPrimary: Colors.white,
         padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
       ),
     );
