@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:safety_application/main.dart';
 import 'package:safety_application/pages/Home_page.dart';
@@ -16,13 +17,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  
+
   void navigateToPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => HomePage(
-          text: '',
-          onTap: widget.onTap ?? () {},
+          text: '', 
+          onTap: widget.onTap ?? () {}, title: '',
         ),
       ),
     );
@@ -36,25 +39,44 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 53, 161, 161),
       body: SafeArea(
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              
               children: [
-                const Icon(
-                  Icons.safety_check,
-                  size: 100,
-                  color: Color.fromARGB(255, 16, 204, 32),
-                ),
+                Container(
+                  alignment: Alignment.topLeft,
+                  
+                  height: 200,
+                  width: 400,
+                  margin: const EdgeInsets.only(left: 0.0),
+                  constraints: const BoxConstraints(minWidth: 100,
+    minHeight: 100,
+   ),
+  padding: const EdgeInsets.only(right: 10.0),
+  decoration: BoxDecoration(
+    color: const Color.fromARGB(255, 246, 247, 248),
+  borderRadius: BorderRadius.circular(20),
+  
+  
+
+  
+
+),
+
+  
+),
+
                 //logo
                 const SizedBox(height: 50),
                 //welcoming message
                 const Text(
                   "welcome to safety matters",
                   style: TextStyle(
-                    color: Color.fromARGB(255, 16, 204, 32),
+                    color: Color.fromARGB(255, 13, 15, 13),
                     fontSize: 45,
                     fontFamily: AutofillHints.addressCityAndState,
                   ),
@@ -91,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text(
                         'Register now',
                         style: TextStyle(
-                          color: Color.fromARGB(255, 11, 230, 66),
+                          color: Color.fromARGB(255, 6, 8, 7),
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                           fontFamily: AutofillHints.addressCityAndState,
@@ -108,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text(
                         'Back to HOME PAGE',
                         style: TextStyle(
-                          color: Color.fromARGB(255, 11, 230, 66),
+                          color: Color.fromARGB(255, 9, 10, 9),
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                           fontFamily: AutofillHints.addressCityAndState,
@@ -117,15 +139,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
+               
                 const Column(
                   children: [
-                    SizedBox(
-                      height: 10,
-                      width: 10,
-                      child: Text(
-                        'Back',
-                        style: TextStyle(
-                          color: Colors.brown,
+                    SizedBox(height: 10,width: 10,
+                      child: Text('Back',style: TextStyle(color: Colors.brown,
                         ),
                       ),
                     )

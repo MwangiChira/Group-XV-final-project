@@ -27,24 +27,43 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context,) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 53, 161, 161),
       body: SafeArea(
         child: Center(
+
+          
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              //logo
-              const Icon(
-                Icons.safety_check,
-                size: 100,
-                color: Color.fromARGB(255, 16, 204, 32),
-              ),
-              const SizedBox(height: 50),
+                        Container(
+                  alignment: Alignment.topLeft,
+                  
+                  height: 200,
+                  width: 400,
+                  margin: const EdgeInsets.only(left: 0.0),
+                  constraints: const BoxConstraints(minWidth: 100,
+    minHeight: 100,
+   ),
+  padding: const EdgeInsets.only(right: 10.0),
+  decoration: BoxDecoration(
+    color: const Color.fromARGB(255, 246, 247, 248),
+  borderRadius: BorderRadius.circular(20),
+  
+  
+
+  
+
+),
+
+  
+),             
+               const SizedBox(height: 50),
               //welcoming message
               const Text(
                 "Let's create an account for you!",
-                style: TextStyle(color: Color.fromARGB(255, 16, 204, 32), fontSize: 45, fontFamily: AutofillHints.addressCityAndState),
+                style: TextStyle(color: Color.fromARGB(255, 13, 14, 13), fontSize: 45, fontFamily: AutofillHints.addressCityAndState),
               ),
               //user log in
 const SizedBox(height: 50),
@@ -92,7 +111,7 @@ const SizedBox(height: 50),
            child: const Text(
             'Login now',
             style: TextStyle(
-              color: Color.fromARGB(255, 55, 230, 11),
+              color: Color.fromARGB(255, 8, 8, 8),
               fontWeight: FontWeight.bold,
               fontSize: 20,
               fontFamily: AutofillHints.addressCityAndState,
@@ -112,4 +131,5 @@ const SizedBox(height: 50),
     );
   }
 }
+
 
