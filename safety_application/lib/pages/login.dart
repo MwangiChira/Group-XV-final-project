@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:safety_application/main.dart';
 import 'package:safety_application/pages/Home_page.dart';
+import 'package:safety_application/pages/components/my_button.dart';
 import 'package:safety_application/pages/components/my_text_field.dart';
 
 void main() {
@@ -17,6 +18,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  get onTap => null;
+  
+  get color => null;
+
   
 
   void navigateToPage(BuildContext context) {
@@ -104,6 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 10),
                 //MyButton(onTap: () {}, text: 'sign in'),
                 const SizedBox(height: 10),
+                 const MyButton(text: "Sign In"),
                 Row(
                   children: [
                     const Text('Not a member?'),

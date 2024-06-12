@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:safety_application/main.dart';
+import 'package:safety_application/pages/components/my_button.dart';
 import 'package:safety_application/pages/components/my_text_field.dart';
+
 
 void main(){
   runApp(const MyApp());
@@ -101,33 +103,14 @@ const SizedBox(height: 50),
             //MyButton(onTap: () {}, 
               //text: 'Sign up'),
                const SizedBox(height: 10),
+                const MyButton(text: "Sign up"),
 
-      Row(
-        children: [
-          const Text('already a member?'),
-          const SizedBox(width: 10),
-         GestureDetector(
-          onTap: widget.onTap,
-           child: const Text(
-            'Login now',
-            style: TextStyle(
-              color: Color.fromARGB(255, 8, 8, 8),
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              fontFamily: AutofillHints.addressCityAndState,
-            ),
-           ),
-         ),
-
-      ],
-      ),
             ]),
           ),
         ),
       ),
       
 //FIRST TIME USER REGISTRATION
-   
     );
   }
 }
