@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:safety_application/firebase_auth.dart';
 import 'package:safety_application/main.dart';
 import 'package:safety_application/pages/components/my_button.dart';
 import 'package:safety_application/pages/components/my_text_field.dart';
@@ -19,10 +21,21 @@ class RegistrationPage  extends StatefulWidget {
 // ignore: unused_element
 class _RegistrationPageState extends State<RegistrationPage> {
 //text controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final nameController = TextEditingController();
-  final confirmPasswordcontroller = TextEditingController();
+ final _formKey = GlobalKey<FormState>();
+  final FirebaseAuthServices auth = FirebaseAuthServices();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController confirmPasswordcontroller = TextEditingController();
+
+   @override
+  void dispose() {
+    //avoids memory leak
+    nameController.dispose();
+    emailController.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
 
   //signup methpd 
   void signUp() async{}
@@ -32,8 +45,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       backgroundColor: const Color.fromARGB(255, 53, 161, 161),
       body: SafeArea(
         child: Center(
-
-          
+          key: _formKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Column(
@@ -103,7 +115,10 @@ const SizedBox(height: 50),
             //MyButton(onTap: () {}, 
               //text: 'Sign up'),
                const SizedBox(height: 10),
-                const MyButton(text: "Sign up"),
+                ElevatedButton(
+                onPressed:signup,
+                child: const MyButton(text: "Sign up"),
+              ),
 
             ]),
           ),
@@ -112,6 +127,23 @@ const SizedBox(height: 50),
       
 //FIRST TIME USER REGISTRATION
     );
+  }
+  
+  void signup() async {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    User? user = await auth.signUpWithEmailAndPassword(email, password);
+
+    if (user != null) {
+      // ignore: avoid_print
+      print('user already exists');
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, "/home");
+    } else {
+      // ignore: avoid_print
+      print('succesfullu signed up');
+    }
   }
 }
 

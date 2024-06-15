@@ -40,9 +40,9 @@ class _HomePageState extends State<HomePage> {
       body: Center( 
         child: Column(  
           children: [
-            GestureDetector(
-              onTap: widget.onTap,
-              child: const Center(
+           
+  
+              const Center(
                 child: Text(
                   'SALAMA MIND',
                   style: TextStyle(
@@ -51,9 +51,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-            ),
+            
             const SizedBox(height: 20),
-            GestureDetector(
+           new  GestureDetector(
               onTap: widget.onTap,
               child: const Text(
                 'User',
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(height: 20),
-            GestureDetector(
+          GestureDetector(
               onTap: widget.onTap,
               child: const Text(
                 'Therapist',

@@ -23,7 +23,7 @@ class _BackToHomeState extends State<BackToHome> {
     if (showHomePage) {
       return HomePage(
         onTap: toggleback,
-        text: '',
+        text: '', title: '',
       );
     } else {
       return LoginOrRegister(onTap: toggleback);

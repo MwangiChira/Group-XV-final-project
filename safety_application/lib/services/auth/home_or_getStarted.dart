@@ -26,7 +26,7 @@ class _HomeOrGetstartedState extends State<HomeOrGetstarted> {
     if (showHomePage) {
       return HomePage(
         onTap: togglepages,
-        text: '',
+        text: '', title: '',
       );
     } else {
       return LoginOrRegister(onTap: togglepages);

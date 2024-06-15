@@ -1,5 +1,7 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:safety_application/firebase_auth.dart';
 import 'package:safety_application/main.dart';
 import 'package:safety_application/pages/Home_page.dart';
 import 'package:safety_application/pages/components/my_button.dart';
@@ -37,9 +39,20 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 //text controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final nameController = TextEditingController();
+ final _formKey = GlobalKey<FormState>();
+  final FirebaseAuthServices auth = FirebaseAuthServices();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+
+   @override
+  void dispose() {
+    // Avoids memory leak
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
+             key: _formKey,
             child: Column(
               
               children: [
@@ -109,7 +123,11 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 10),
                 //MyButton(onTap: () {}, text: 'sign in'),
                 const SizedBox(height: 10),
-                 const MyButton(text: "Sign In"),
+                 // ignore: unnecessary_new
+                 new ElevatedButton(
+                    onPressed: signin,
+                    child: const MyButton(text: "Sign in"),
+                  ),
                 Row(
                   children: [
                     const Text('Not a member?'),
@@ -163,5 +181,24 @@ class _LoginPageState extends State<LoginPage> {
     );
 
 //FIRST TIME USER REGISTRATION
+  }
+    void signin() async {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    User? user = await auth.signInWithEmailAndPassword(email, password);
+
+    if (user != null) {
+      // ignore: avoid_print
+      print('User signed in');
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, "/home");
+    } else {
+      // ignore: avoid_print
+      print('User is not signed in');
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, "/registration_page");
+
+    }
   }
 }
