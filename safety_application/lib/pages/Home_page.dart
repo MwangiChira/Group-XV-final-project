@@ -39,10 +39,9 @@ class _HomePageState extends State<HomePage> {
       drawerScrimColor: Colors.green,
       body: Center( 
         child: Column(  
-          children: [
-           
-  
-              const Center(
+          children: [ 
+          
+           const Center(
                 child: Text(
                   'SALAMA MIND',
                   style: TextStyle(
@@ -53,29 +52,18 @@ class _HomePageState extends State<HomePage> {
               ),
             
             const SizedBox(height: 20),
-           new  GestureDetector(
-              onTap: widget.onTap,
-              child: const Text(
-                'User',
-                style: TextStyle(
-                  color: Colors.white,
-                  backgroundColor: Colors.black,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-          GestureDetector(
-              onTap: widget.onTap,
-              child: const Text(
-                'Therapist',
-                style: TextStyle(
-                  color: Colors.white,
-                  backgroundColor: Colors.black,
-                  fontSize: 20,
-                ),
-              ),
-            ),
+TextButton(
+  onPressed: () {Navigator.pushNamed(context, '/'); 
+  },// Replace '/therapist_page' with your actual route name
+  child: const Text(
+    'GET STARTED',
+    style: TextStyle(
+      color: Colors.white,
+      backgroundColor: Colors.black,
+      fontSize: 20,
+    ),
+  ),
+),
           ],
         ),
       ),

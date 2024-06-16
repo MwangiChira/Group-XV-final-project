@@ -2,65 +2,77 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:safety_application/firebase_auth.dart';
 import 'package:safety_application/main.dart';
+import 'package:safety_application/pages/Home_page.dart';
 import 'package:safety_application/pages/components/my_text_field.dart';
+import 'package:safety_application/pages/registration_page.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class RegistrationPage extends StatefulWidget {
-  final VoidCallback onTap;
-  const RegistrationPage({super.key, required this.onTap});
+class LoginPage extends StatefulWidget {
+  final VoidCallback? onTap;
+  const LoginPage({super.key, this.onTap});
 
   @override
-  State<RegistrationPage> createState() => _RegistrationPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class _LoginPageState extends State<LoginPage> {
   // text controllers
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuthServices auth = FirebaseAuthServices();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
   String successMessage = '';
-  String _userType = 'normal'; // default user type
+  
+  get onTap => null;
 
   @override
   void dispose() {
-    // avoids memory leak
-    nameController.dispose();
+    // Avoids memory leak
     emailController.dispose();
     passwordController.dispose();
-    confirmPasswordController.dispose();
+    nameController.dispose();
     super.dispose();
   }
 
-  // sign-up method
-  void signUp() async {
-    if (_formKey.currentState!.validate()) {
-      String email = emailController.text;
-      String password = passwordController.text;
+//WE create a fuction for navigating throught the pages
+  void navigateToPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RegistrationPage(
+        
+          onTap: widget.onTap ?? () {},
+          
+        ),
+      ),
+    );
+  }
 
-      User? user = await auth.signUpWithEmailAndPassword(email, password, _userType);
+//we create a funtion to sign in the user and compair their iemails with the ones in the database using firebase Authentication
+  void signIn() async {
+    String email = emailController.text;
+    String password = passwordController.text;
 
-      if (user != null) {
-        setState(() {
-          successMessage = 'You have successfully signed up!';
-        });
-        if (mounted) {
-          Navigator.pushNamed(context, "/home");
-        }
-      } else {
-        setState(() {
-          successMessage = 'Signup failed. Please try again.';
-        });
-      }
+    User? user = await auth.signInWithEmailAndPassword(email, password);
+
+    if (user != null) {
+      setState(() {
+        successMessage = 'Successfully signed in';
+        Navigator.pushNamed(context, "/registration_page");
+      });
+      
+    } else {
+      setState(() {
+        successMessage = 'Sign in failed. Please try again.';
+      });
     }
   }
 
-  // method to check if email is registered
+  // This function checks whether the email is registered in the database
   Future<void> checkEmail(String email) async {
     try {
       // Try signing in with the provided email and an incorrect password
@@ -111,12 +123,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                   ),
                   const SizedBox(height: 50),
-                  // welcoming message
+                  // Welcoming message
                   const Text(
-                    "Let's create an account for you!",
+                    "Welcome to Safety Matters",
                     style: TextStyle(
-                      color: Color.fromARGB(255, 13, 14, 13),
+                      color: Color.fromARGB(255, 13, 15, 13),
                       fontSize: 45,
+                      fontFamily: AutofillHints.addressCityAndState,
                     ),
                   ),
                   const SizedBox(height: 50),
@@ -138,27 +151,44 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     obscureText: false,
                   ),
                   const SizedBox(height: 10),
-                  MyTextField(
-                    controller: confirmPasswordController,
-                    hintText: 'Confirm Password',
-                    obscureText: true,
+                  ElevatedButton(
+                    // We include the sign-in method defined below and then call the checkEmail function defined in the FirebaseAuthServices
+                    onPressed: signIn,
+                    onLongPress: () => checkEmail(emailController.text.trim()),
+                    child: const Text('Sign In'),
                   ),
                   const SizedBox(height: 10),
-                  DropdownButtonFormField<String>(
-                    value: _userType,
-                    items: const [
-                      DropdownMenuItem(value: 'normal', child: Text('Normal User')),
-                      DropdownMenuItem(value: 'therapist', child: Text('Therapist')),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Not a member?'),
+                      const SizedBox(width: 10),
+                      GestureDetector(
+                        onTap: () => navigateToPage(context),
+                        child: const Text(
+                          'Register now',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 6, 8, 7),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: AutofillHints.addressCityAndState,
+                          ),
+                        ),
+                      ),
                     ],
-                    onChanged: (value) {
-                      setState(() {
-                        _userType = value!;
-                      });
-                    },
                   ),
-                  ElevatedButton(
-                    onPressed: signUp,
-                    child: const Text('Sign Up'),
+                  const SizedBox(height: 10),
+                  GestureDetector(
+                    onTap: () => navigateToPage(context),
+                    child: const Text(
+                      'Back to HOME PAGE',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 9, 10, 9),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: AutofillHints.addressCityAndState,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Text(
