@@ -26,7 +26,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   String successMessage = '';
-  
+  String _userType = 'normal';
+
   get onTap => null;
 
   @override
@@ -44,9 +45,7 @@ class _LoginPageState extends State<LoginPage> {
       context,
       MaterialPageRoute(
         builder: (context) => RegistrationPage(
-        
           onTap: widget.onTap ?? () {},
-          
         ),
       ),
     );
@@ -64,7 +63,6 @@ class _LoginPageState extends State<LoginPage> {
         successMessage = 'Successfully signed in';
         Navigator.pushNamed(context, "/registration_page");
       });
-      
     } else {
       setState(() {
         successMessage = 'Sign in failed. Please try again.';
@@ -76,7 +74,8 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> checkEmail(String email) async {
     try {
       // Try signing in with the provided email and an incorrect password
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: 'incorrect_password');
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email, password: 'incorrect_password');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         setState(() {
@@ -151,13 +150,27 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: false,
                   ),
                   const SizedBox(height: 10),
-                  ElevatedButton(
-                    // We include the sign-in method defined below and then call the checkEmail function defined in the FirebaseAuthServices
-                    onPressed: signIn,
-                    onLongPress: () => checkEmail(emailController.text.trim()),
-                    child: const Text('Sign In'),
+                  DropdownButtonFormField<String>(
+              value: _userType,
+              items: const [
+                DropdownMenuItem(value: 'normal', child: Text('Normal User')),
+                DropdownMenuItem(value: 'therapist', child: Text('Therapist')),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  _userType = value!;
+                });
+              },
                   ),
-                  const SizedBox(height: 10),
+                  
+                   ElevatedButton(
+                      // We include the sign-in method defined below and then call the checkEmail function defined in the FirebaseAuthServices
+                      onPressed: signIn,
+                      onLongPress: () =>
+                          checkEmail(emailController.text.trim()),
+                      child: const Text('Sign In'),
+                    ),
+                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -177,7 +190,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
                   GestureDetector(
                     onTap: () => navigateToPage(context),
                     child: const Text(
