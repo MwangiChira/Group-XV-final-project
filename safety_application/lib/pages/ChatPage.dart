@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:safety_application/lib/services/ChatService.dart';
-import 'package:safety_application/lib/pages/ChatBubble.dart'; 
+import 'package:safety_application/pages/ChatBubble.dart';
+import 'package:safety_application/services/ChatService.dart'; 
 
 
 class ChatPage extends StatefulWidget {

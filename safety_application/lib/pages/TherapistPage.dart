@@ -1,8 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:safety_application/firebase_auth.dart';
-import 'package:safety_application/pages/Home_page.dart';
 import 'package:safety_application/pages/ChatPage.dart';
 
 class TherapistPage extends StatefulWidget {
@@ -21,7 +19,7 @@ class _TherapistpageState extends State<TherapistPage> {
       appBar: AppBar(
         title: const Text('Therapist Page'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -32,7 +30,7 @@ class _TherapistpageState extends State<TherapistPage> {
         stream: FirebaseFirestore.instance.collection('therapist').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           final docs = snapshot.data!.docs;
 
