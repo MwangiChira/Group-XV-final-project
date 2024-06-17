@@ -4,9 +4,9 @@ import 'package:safety_application/pages/Home_page.dart';
 import 'package:safety_application/services/auth/login_or_register.dart';
 
 class HomeOrGetstarted extends StatefulWidget {
-final VoidCallback? onTap;
 
-  const HomeOrGetstarted({super.key,  this.onTap});
+
+  const HomeOrGetstarted({super.key});
 
   @override
   State<HomeOrGetstarted> createState() => _HomeOrGetstartedState();
@@ -26,10 +26,10 @@ class _HomeOrGetstartedState extends State<HomeOrGetstarted> {
     if (showHomePage) {
       return HomePage(
         onTap: togglepages,
-        text: '',
+        text: '', title: '',
       );
     } else {
-      return LoginOrRegister(onTap: togglepages);
+      return const LoginOrRegister();
     }
   }
 }
