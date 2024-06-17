@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:safety_application/firebase_auth.dart';
 import 'package:safety_application/main.dart';
-import 'package:safety_application/pages/Home_page.dart';
 import 'package:safety_application/pages/components/my_text_field.dart';
 import 'package:safety_application/pages/registration_page.dart';
 
@@ -61,11 +60,12 @@ class _LoginPageState extends State<LoginPage> {
     if (user != null) {
       setState(() {
         successMessage = 'Successfully signed in';
-        Navigator.pushNamed(context, "/registration_page");
+        Navigator.pushNamed(context, "/home");
       });
     } else {
       setState(() {
         successMessage = 'Sign in failed. Please try again.';
+         Navigator.pushNamed(context, "/home");
       });
     }
   }

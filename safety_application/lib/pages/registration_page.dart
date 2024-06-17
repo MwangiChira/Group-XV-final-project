@@ -25,7 +25,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   String successMessage = '';
-  String _userType = 'normal'; // default user type
+  String _userType = 'normal';
+
+  get therapist => null; // default user type
 
   @override
   void dispose() {
@@ -42,15 +44,23 @@ class _RegistrationPageState extends State<RegistrationPage> {
     if (_formKey.currentState!.validate()) {
       String email = emailController.text;
       String password = passwordController.text;
+      String name = nameController.text;
+      String specialization = '';
 
-      User? user = await auth.signUpWithEmailAndPassword(email, password, _userType);
-
+      User? user = await auth.signUpAsUser(email, password, _userType);
+      User? therapist =
+          await auth.signUpAsTherapist(email, password, name, specialization);
       if (user != null) {
         setState(() {
           successMessage = 'You have successfully signed up!';
         });
         if (mounted) {
           Navigator.pushNamed(context, "/home");
+        } else if (therapist != null) {
+          setState(() {
+            successMessage = 'You have successfully signed up!';
+            Navigator.pushNamed(context, "/home");
+          });
         }
       } else {
         setState(() {
@@ -64,7 +74,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Future<void> checkEmail(String email) async {
     try {
       // Try signing in with the provided email and an incorrect password
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: 'incorrect_password');
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email, password: 'incorrect_password');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         setState(() {
@@ -147,8 +158,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   DropdownButtonFormField<String>(
                     value: _userType,
                     items: const [
-                      DropdownMenuItem(value: 'normal', child: Text('Normal User')),
-                      DropdownMenuItem(value: 'therapist', child: Text('Therapist')),
+                      DropdownMenuItem(
+                          value: 'normal', child: Text('Normal User')),
+                      DropdownMenuItem(
+                          value: 'therapist', child: Text('Therapist')),
                     ],
                     onChanged: (value) {
                       setState(() {
