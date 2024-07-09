@@ -47,9 +47,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
       String name = nameController.text;
       String specialization = '';
 
-      User? user = await auth.signUpAsUser(email, password, _userType);
+      User? user = (await auth.signUpAsUser(email, password, _userType)) as User?;
       User? therapist =
-          await auth.signUpAsTherapist(email, password, name, specialization);
+          (await auth.signUpAsTherapist(email, password, name, specialization)) as User?;
       if (user != null) {
         setState(() {
           successMessage = 'You have successfully signed up!';
@@ -59,7 +59,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         } else if (therapist != null) {
           setState(() {
             successMessage = 'You have successfully signed up!';
-            Navigator.pushNamed(context, "/home");
+              Navigator.pushNamed(context, "/user_page");
           });
         }
       } else {
