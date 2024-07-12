@@ -55,7 +55,7 @@ class _TherapistpageState extends State<TherapistPage> {
             radius: 30,
             backgroundImage: data['imageUrl'] != null
                 ? NetworkImage(data['imageUrl'])
-                : const AssetImage('assets/images/placeholder.png')
+                : const AssetImage('assets/images/user.png')
                     as ImageProvider, //ikileta shida remove the const here and above
           ),
           title: Text(data['name'] ?? 'Unknown Name'),
