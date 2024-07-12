@@ -10,7 +10,7 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   get onTap => null;
-  
+
   get navigateToPage => null;
 
   @override
@@ -22,23 +22,24 @@ class _UserPageState extends State<UserPage> {
       body: Column(
         children: [
           GestureDetector(
-            onTap: () {
+              onTap: () {
                 Navigator.pushNamed(context, '/TherapistPage');
-            },
-            child: const Text('Therapist')
-            ),
-           
+              },
+              child: const Text('Therapist')),
+          const Row(
+            children: [
+              Text(' Hello user'),
+              Image(image: AssetImage('assets/images/nira.png'))
+            ],
+          ),
           const PanicButton(),
-
           GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/ChatPage');
-            },
-            child: const Text ('your chat page'))
+              onTap: () {
+                Navigator.pushNamed(context, '/ChatPage');
+              },
+              child: const Text('your chat page'))
         ],
-       
-        ),
-        
+      ),
     );
   }
 }
