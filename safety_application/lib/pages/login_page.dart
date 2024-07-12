@@ -55,17 +55,18 @@ class _LoginPageState extends State<LoginPage> {
     String email = emailController.text;
     String password = passwordController.text;
 
-    User? user = await auth.signInWithEmailAndPassword(email, password);
+    // ignore: unnecessary_cast
+    AuthenticatedUser? user = (await auth.signInWithEmailAndPassword(email, password)) as AuthenticatedUser?;
 
     if (user != null) {
       setState(() {
         successMessage = 'Successfully signed in';
-        Navigator.pushNamed(context, "/home");
+        Navigator.pushNamed(context, "/user_page");
       });
     } else {
       setState(() {
         successMessage = 'Sign in failed. Please try again.';
-         Navigator.pushNamed(context, "/home");
+         Navigator.pushNamed(context, "/registration_page");
       });
     }
   }
@@ -117,6 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     padding: const EdgeInsets.only(right: 10.0),
                     decoration: BoxDecoration(
+                      image: const DecorationImage(image: AssetImage('assets/images/image3')),
                       color: const Color.fromARGB(255, 246, 247, 248),
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -175,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text('Not a member?'),
-                      const SizedBox(width: 10),
+                  
                       GestureDetector(
                         onTap: () => navigateToPage(context),
                         child: const Text(

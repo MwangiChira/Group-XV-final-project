@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:safety_application/lib/services/ChatService.dart';
-import 'package:safety_application/lib/pages/ChatBubble.dart'; 
-
+import 'ChatBubble.dart';
+import 'ChatService.dart';
 
 class ChatPage extends StatefulWidget {
-  final String receiverTherapistEmail;
-  final String receiverTherapistId;
+  final String chatId;
+  final String therapistName;
+  final String therapistSpecialization;
+  final String therapistImageUrl;
 
   const ChatPage({
     super.key,
-    required this.receiverTherapistEmail,
-    required this.receiverTherapistId,
+    required this.chatId,
+    required this.therapistName,
+    required this.therapistSpecialization,
+    required this.therapistImageUrl,
+    required String receiverTherapistEmail,
+    required String receiverTherapistId,
   });
 
   @override
@@ -23,12 +28,22 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  late String anonymousUserId;
+
+  @override
+  void initState() {
+    super.initState();
+    anonymousUserId = _auth.currentUser?.uid ?? '';
+  }
 
   // Function to send a message
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
       await _chatService.sendMessage(
-          widget.receiverTherapistId, _messageController.text);
+        widget.chatId,
+        anonymousUserId,
+        _messageController.text,
+      );
       _messageController.clear();
     }
   }
@@ -37,9 +52,17 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.receiverTherapistEmail),
+        title: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(widget.therapistImageUrl),
+            ),
+            const SizedBox(width: 10),
+            Text(widget.therapistName),
+          ],
+        ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -59,8 +82,8 @@ class _ChatPageState extends State<ChatPage> {
 
   // Build message list
   Widget _buildMessageList() {
-    return StreamBuilder(
-      stream: _chatService.getMessages(widget.receiverTherapistId, _auth.currentUser!.uid),
+    return StreamBuilder<QuerySnapshot>(
+      stream: _chatService.getMessages(widget.chatId),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
@@ -88,8 +111,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget _buildMessageItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
-
-    var alignment = (data['senderId'] == _auth.currentUser!.uid)
+    var alignment = (data['senderId'] == anonymousUserId)
         ? Alignment.centerRight
         : Alignment.centerLeft;
 
@@ -98,11 +120,13 @@ class _ChatPageState extends State<ChatPage> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          crossAxisAlignment: (data['senderId'] == _auth.currentUser!.uid)
+          crossAxisAlignment: (data['senderId'] == anonymousUserId)
               ? CrossAxisAlignment.end
               : CrossAxisAlignment.start,
           children: [
-            Text(data['senderEmail']),
+            Text(data['senderId'] == anonymousUserId
+                ? 'Anonymous'
+                : widget.therapistName),
             const SizedBox(height: 5),
             ChatBubble(message: data['message']),
           ],
