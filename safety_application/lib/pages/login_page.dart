@@ -177,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text('Not a member?'),
-                      const SizedBox(width: 10),
+                  
                       GestureDetector(
                         onTap: () => navigateToPage(context),
                         child: const Text(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safety_application/firebase_auth.dart';
 import 'package:safety_application/firebase_options.dart';
+import 'package:safety_application/pages/ChatPage.dart';
 import 'package:safety_application/pages/Home_page.dart';
 import 'package:safety_application/pages/TherapistPage.dart';
 import 'package:safety_application/pages/login_page.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
               ),
           '/user_page': (context) => const UserPage(),
           '/TherapistPage': (context) => const TherapistPage(),
+          '/ChatPage': (context) => const ChatPage(receiverTherapistEmail: '', receiverTherapistId: '',),
         });
   }
 }

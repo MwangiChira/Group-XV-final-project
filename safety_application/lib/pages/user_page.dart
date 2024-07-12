@@ -29,6 +29,12 @@ class _UserPageState extends State<UserPage> {
             ),
            
           const PanicButton(),
+
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/ChatPage');
+            },
+            child: const Text ('your chat page'))
         ],
        
         ),

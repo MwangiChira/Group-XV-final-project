@@ -34,7 +34,7 @@ class FirebaseAuthServices {
   }
 
   Future<AuthenticatedUser?> signUpAsTherapist(
-      String email, String password, String name, String specialization) async {
+  String email, String password, String name, String specialization) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
