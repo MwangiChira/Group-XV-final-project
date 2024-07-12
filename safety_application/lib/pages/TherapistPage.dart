@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:safety_application/pages/ChatPage.dart';
+import 'package:uuid/uuid.dart';
 
 class TherapistPage extends StatefulWidget {
   const TherapistPage({super.key});
@@ -47,19 +48,47 @@ class _TherapistpageState extends State<TherapistPage> {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
     if (_auth.currentUser?.email != data['email']) {
-      return ListTile(
-        title: Text(data['email']),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChatPage(
-                receiverTherapistEmail: data['email'],
-                receiverTherapistId: data['tid'],
-              ),
-            ),
-          );
-        },
+      return Card(
+        margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+        child: ListTile(
+          leading: CircleAvatar(
+            radius: 30,
+            backgroundImage: data['imageUrl'] != null
+                ? NetworkImage(data['imageUrl'])
+                : const AssetImage('assets/images/placeholder.png')
+                    as ImageProvider, //ikileta shida remove the const here and above
+          ),
+          title: Text(data['name'] ?? 'Unknown Name'),
+          subtitle: Text(data['specialization']),
+          trailing: IconButton(
+            icon: Icon(Icons.chat),
+            onPressed: () async {
+              //generate unique chat id
+              String chatId = Uuid().v4();
+              await FirebaseFirestore.instance
+                  .collection('chats')
+                  .doc(chatId)
+                  .set({
+                'therapistId': data['tid'],
+                'userId': _auth.currentUser!.uid,
+                'startTime': FieldValue.serverTimestamp(),
+              });
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatPage(
+                    chatId: chatId,
+                    therapistName: '',
+                    therapistSpecialization: '',
+                    therapistImageUrl: '',
+                    receiverTherapistEmail: '',
+                    receiverTherapistId: '',
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
       );
     } else {
       return Container();

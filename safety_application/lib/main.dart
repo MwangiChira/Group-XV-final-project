@@ -64,7 +64,14 @@ class MyApp extends StatelessWidget {
               ),
           '/user_page': (context) => const UserPage(),
           '/TherapistPage': (context) => const TherapistPage(),
-          '/ChatPage': (context) => const ChatPage(receiverTherapistEmail: '', receiverTherapistId: '',),
+          '/ChatPage': (context) => const ChatPage(
+                receiverTherapistEmail: '',
+                receiverTherapistId: '',
+                chatId: '',
+                therapistName: '',
+                therapistSpecialization: '',
+                therapistImageUrl: '',
+              ),
         });
   }
 }
