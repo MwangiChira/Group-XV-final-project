@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'ChatBubble.dart';
 import 'ChatService.dart';
@@ -69,49 +69,52 @@ class _ChatPageState extends State<ChatPage> {
         ),
       ),
       body: Column(
-        children: [
-          Expanded(
-            child: _buildMessageList(),
-          ),
-          _buildMessageInput(),
-          const SizedBox(height: 25),
-        ],
+        // children: [
+        //   // Expanded(
+        //     // child: _buildMessageList(),
+        //   ),
+        //   _buildMessageInput(),
+        //   const SizedBox(height: 25),
+        // ],
       ),
     );
   }
 
   // Build message list
-  Widget _buildMessageList() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: _chatService.getMessages(widget.chatId),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Loading...');
-        }
+  // Widget _buildMessageList() {
+    // return StreamBuilder<QuerySnapshot>(
+      // stream: _chatService.getMessages(widget.chatId),
+      // builder: (context, snapshot) {
+      //   if (snapshot.hasError) {
+      //     return Text('Error: ${snapshot.error}');
+      //   }
+      //   if (snapshot.connectionState == ConnectionState.waiting) {
+      //     return const Text('Loading...');
+      //   }
 
         // Ensure snapshot data is available and not empty
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Text('No messages yet.');
-        }
+        // var docs;
+        // if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+        //   return const Text('No messages yet.');
+        // }
 
-        // Build the list of messages
-        return ListView(
-          children: snapshot.data!.docs
-              .map((document) => _buildMessageItem(document))
-              .toList(),
-        );
-      },
-    );
-  }
+        // // Build the list of messages
+        // var docs;
+        // return ListView(
+        //   children: snapshot.data!.docs
+        //       .map((document) => _buildMessageItem(document))
+        //       .toList(),
+        // );
+      // },
+  //   );
+  // }
 
   // Build individual message item
   Widget _buildMessageItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
-    var alignment = (data['senderId'] == anonymousUserId)
+    Object anonymousUserId;
+    var alignment = (data['senderId'])
         ? Alignment.centerRight
         : Alignment.centerLeft;
 
@@ -120,11 +123,11 @@ class _ChatPageState extends State<ChatPage> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          crossAxisAlignment: (data['senderId'] == anonymousUserId)
+          crossAxisAlignment: (data['senderId'])
               ? CrossAxisAlignment.end
               : CrossAxisAlignment.start,
           children: [
-            Text(data['senderId'] == anonymousUserId
+            Text(data['senderId']
                 ? 'Anonymous'
                 : widget.therapistName),
             const SizedBox(height: 5),
@@ -137,6 +140,7 @@ class _ChatPageState extends State<ChatPage> {
 
   // Build message input
   Widget _buildMessageInput() {
+    var sendMessage;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Row(
@@ -161,4 +165,16 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
+  
+  // class _messageController {
+  // }
+}
+
+
+
+class DocumentSnapshot {
+  data() {}
+}
+
+class QuerySnapshot {
 }

@@ -12,12 +12,16 @@
           "package_name": "com.example.safety_application"
         }
       },
+<<<<<<< HEAD
+      "oauth_client": [],
+=======
       "oauth_client": [
         {
           "client_id": "353784544371-28ehdugsf464tihl4ihqsfinvvfctln1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
+>>>>>>> 418a8fc5f52783e1620c55819a1a9e8c545219be
       "api_key": [
         {
           "current_key": "AIzaSyCvmvApxdevLKe_K6VoCB_t7qguKhOBiF4"
@@ -25,6 +29,9 @@
       ],
       "services": {
         "appinvite_service": {
+<<<<<<< HEAD
+          "other_platform_oauth_client": []
+=======
           "other_platform_oauth_client": [
             {
               "client_id": "353784544371-28ehdugsf464tihl4ihqsfinvvfctln1.apps.googleusercontent.com",
@@ -38,6 +45,7 @@
               }
             }
           ]
+>>>>>>> 418a8fc5f52783e1620c55819a1a9e8c545219be
         }
       }
     }

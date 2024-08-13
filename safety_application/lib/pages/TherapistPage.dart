@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:safety_application/pages/ChatPage.dart';
-import 'package:uuid/uuid.dart';
+// import 'package:uuid/uuid.dart';
 
 class TherapistPage extends StatefulWidget {
   const TherapistPage({super.key});
@@ -28,18 +28,19 @@ class _TherapistpageState extends State<TherapistPage> {
       ),
       body: StreamBuilder<QuerySnapshot>(
         // Listening to snapshots from the 'therapist' collection in Firestore
-        stream: FirebaseFirestore.instance.collection('therapist').snapshots(),
+        // stream: FirebaseFirestore.instance.collection('therapist').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-          final docs = snapshot.data!.docs;
+          // var docs;
+          // final docs = snapshot.data!.docs;
 
           // Building a list of therapist items from the documents
           return ListView(
-            children: docs.map((doc) => _buildTherapistListItem(doc)).toList(),
+            // children: docs.map((doc) => _buildTherapistListItem(doc)).toList(),
           );
-        },
+        }, stream: null,
       ),
     );
   }
@@ -64,15 +65,15 @@ class _TherapistpageState extends State<TherapistPage> {
             icon: Icon(Icons.chat),
             onPressed: () async {
               //generate unique chat id
-              String chatId = Uuid().v4();
-              await FirebaseFirestore.instance
-                  .collection('chats')
-                  .doc(chatId)
-                  .set({
-                'therapistId': data['tid'],
-                'userId': _auth.currentUser!.uid,
-                'startTime': FieldValue.serverTimestamp(),
-              });
+              String chatId = build as String;
+              // await FirebaseFirestore.instance
+              //     .collection('chats')
+              //     .doc(chatId)
+              //     .set({
+              //   'therapistId': data['tid'],
+              //   'userId': _auth.currentUser!.uid,
+              //   'startTime': FieldValue.serverTimestamp(),
+              // });
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -94,4 +95,18 @@ class _TherapistpageState extends State<TherapistPage> {
       return Container();
     }
   }
+}
+
+class DocumentSnapshot {
+  data() {}
+}
+
+class FirebaseFirestore {
+}
+
+class FieldValue {
+  static serverTimestamp() {}
+}
+
+class QuerySnapshot {
 }

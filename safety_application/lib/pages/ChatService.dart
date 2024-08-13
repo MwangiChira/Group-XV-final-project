@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Function to send a message
   Future<void> sendMessage(
@@ -26,4 +26,22 @@ class ChatService {
         .orderBy('timestamp', descending: false)
         .snapshots();
   }
+}
+
+class _firestore {
+  static collection(String s) {}
+}
+
+mixin instance {
+}
+
+class QuerySnapshot {
+}
+
+class FieldValue {
+  static serverTimestamp() {}
+}
+
+class FirebaseFirestore {
+  collection(String s) {}
 }
