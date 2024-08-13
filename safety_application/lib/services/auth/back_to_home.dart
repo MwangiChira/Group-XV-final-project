@@ -26,7 +26,7 @@ class _BackToHomeState extends State<BackToHome> {
         text: '', title: '',
       );
     } else {
-      return LoginOrRegister(onTap: toggleback);
+      return const LoginOrRegister();
     }
    
   }
